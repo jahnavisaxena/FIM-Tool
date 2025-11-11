@@ -1,6 +1,6 @@
-# 🛡️ FIMon — Real-Time File Integrity Monitoring Tool
+# 🛡️ TraceLock — Real-Time File Integrity Monitoring Tool
 
-**FIMon** is a lightweight, developer-friendly, real-time **File Integrity Monitoring (FIM)** tool written in Go.  
+**TraceLock** is a lightweight, developer-friendly, real-time **File Integrity Monitoring (FIM)** tool written in Go.  
 It continuously watches directories, computes **SHA-256 hashes**, and logs or alerts on any unauthorized file modifications.
 
 ---
@@ -40,7 +40,7 @@ go mod tidy
 # Build executable
 go build -o fimon
 ```
-##  Project Roadmap — FIMon Evolution Plan
+##  Project Roadmap — TraceLock Evolution Plan
 
 FIMon is being developed as a modular, developer-friendly security agent that grows from a simple file integrity monitor into a lightweight host-based intrusion detection and response (HIDS/EDR) system.
 
