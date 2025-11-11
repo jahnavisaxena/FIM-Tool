@@ -4,20 +4,20 @@
 
 ---
 
-## 🧭 Modular Development Phases
+##  Modular Development Phases
 
 | **Phase** | **Name** | **Key Additions** | **Outcome** |
 |:----------:|-----------|-------------------|--------------|
-| 🧱 **1** | **Foundation Layer (Core FIM)** | Real-time file watcher, SHA-256 hash verification, baseline creation & JSON logging | Detects unauthorized file changes instantly and builds a reliable forensic trail |
-| 🧩 **2** | **Intelligence Layer** | Email / Telegram alerts, anomaly detection, burst monitoring logic | Adds behavioral awareness and active alerting for suspicious or high-frequency modifications |
-| 🗃️ **3** | **Persistence Layer** | SQLite forensic database, CLI queries, log rotation | Enables long-term forensic data retention and analyst queries |
-| 🧠 **4** | **Awareness Layer** | Process & user context tracking (via OSQuery/Falco-like hooks), Sigma/YARA rule scanning | Correlates *who* changed *what*, moving TraceLock towards true HIDS capability |
-| 🌐 **5** | **Visualization Layer** | Web dashboard (`net/http`), REST API, real-time analytics graphs | Converts TraceLock into an interactive forensic dashboard with visual monitoring |
-| ⚙️ **6** | **Integration Layer** | SIEM/Wazuh/Elastic export, Docker containerization, systemd service | Enterprise-ready deployment with centralized SOC integration |
+|  **1** | **Foundation Layer (Core FIM)** | Real-time file watcher, SHA-256 hash verification, baseline creation & JSON logging | Detects unauthorized file changes instantly and builds a reliable forensic trail |
+|  **2** | **Intelligence Layer** | Email / Telegram alerts, anomaly detection, burst monitoring logic | Adds behavioral awareness and active alerting for suspicious or high-frequency modifications |
+|  **3** | **Persistence Layer** | SQLite forensic database, CLI queries, log rotation | Enables long-term forensic data retention and analyst queries |
+|  **4** | **Awareness Layer** | Process & user context tracking (via OSQuery/Falco-like hooks), Sigma/YARA rule scanning | Correlates *who* changed *what*, moving TraceLock towards true HIDS capability |
+|  **5** | **Visualization Layer** | Web dashboard (`net/http`), REST API, real-time analytics graphs | Converts TraceLock into an interactive forensic dashboard with visual monitoring |
+|  **6** | **Integration Layer** | SIEM/Wazuh/Elastic export, Docker containerization, systemd service | Enterprise-ready deployment with centralized SOC integration |
 
 ---
 
-## 🧩 Version Progress Mapping
+##  Version Progress Mapping
 
 | **Version** | **Phase** | **Status** | **Key Features** |
 |--------------|------------|------------|------------------|
@@ -33,20 +33,20 @@
 
 ---
 
-## 🧠 Current Focus
+##  Current Focus
 We’re currently at **TraceLock v1.1**, which includes:
-- 🔍 Real-time integrity monitoring  
-- 🧮 SHA-256 file hashing  
-- 🧾 Baseline creation and comparison  
-- 📜 Forensic JSON evidence logging  
+-  Real-time integrity monitoring  
+-  SHA-256 file hashing  
+-  Baseline creation and comparison  
+-  Forensic JSON evidence logging  
 
 **Next milestone:**  
-> 🧩 **v1.2 — Add baseline & forensic log integrity verification**  
+>  **v1.2 — Add baseline & forensic log integrity verification**  
 Ensuring TraceLock’s own audit data cannot be tampered with.
 
 ---
 
-## 🚀 Long-Term Vision
+##  Long-Term Vision
 TraceLock’s ultimate goal is to become a **lightweight forensic EDR agent**, capable of:
 - Real-time integrity detection  
 - Evidence preservation  
@@ -58,7 +58,7 @@ Built entirely in **Go**, TraceLock aims to stay **cross-platform**, **modular**
 
 ---
 
-## 📅 Roadmap Summary
+##  Roadmap Summary
 
 | **Milestone** | **Target Outcome** |
 |----------------|--------------------|
@@ -71,7 +71,7 @@ Built entirely in **Go**, TraceLock aims to stay **cross-platform**, **modular**
 
 ---
 
-> 🧩 *TraceLock’s journey from a simple integrity monitor to a full forensic detection agent begins here.*  
+>  *TraceLock’s journey from a simple integrity monitor to a full forensic detection agent begins here.*  
 > Contributions, ideas, and collaborations are always welcome.
 
 ---
