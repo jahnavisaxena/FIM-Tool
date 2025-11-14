@@ -6,13 +6,22 @@ import (
 	"os"
 )
 
-// Config struct holds TraceLock configuration
-type Config struct {
-	MonitorDir string `json:"monitor_dir"`
-	LogFile    string `json:"log_file"`
+// AlertConfig holds alert-specific settings
+type AlertConfig struct {
+	EnableTelegram   bool   `json:"enable_telegram"`
+	TelegramBotToken string `json:"telegram_bot_token"`
+	TelegramChatID   string `json:"telegram_chat_id"`
 }
 
-// LoadConfig loads settings from config.json, or applies defaults
+// Config holds the main TraceLock configuration
+type Config struct {
+	MonitorDir      string      `json:"monitor_dir"`
+	LogFile         string      `json:"log_file"`
+	ChangeThreshold int         `json:"change_threshold"`
+	Alerts          AlertConfig `json:"alerts"`
+}
+
+// LoadConfig loads settings from config.json or applies defaults
 func LoadConfig(path string) Config {
 	var cfg Config
 
@@ -21,6 +30,7 @@ func LoadConfig(path string) Config {
 		fmt.Println("[!] config.json not found — using defaults.")
 		cfg.MonitorDir = "./watched"
 		cfg.LogFile = "./logs/tracelock.log"
+		cfg.ChangeThreshold = 10
 		return cfg
 	}
 	defer file.Close()
@@ -29,6 +39,7 @@ func LoadConfig(path string) Config {
 		fmt.Println("[!] Invalid config.json — using defaults.")
 		cfg.MonitorDir = "./watched"
 		cfg.LogFile = "./logs/tracelock.log"
+		cfg.ChangeThreshold = 10
 	}
 
 	return cfg

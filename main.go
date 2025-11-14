@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	fmt.Println(" TraceLock — Digital Forensic File Integrity Tool v1.2")
+	fmt.Println(" TraceLock — Digital Forensic File Integrity Tool ")
 	fmt.Println("----------------------------------------------------------")
 
 	// 1️⃣ Load configuration
@@ -28,30 +28,35 @@ func main() {
 	defer logFile.Close()
 	log.SetOutput(logFile)
 
-	// 4️⃣ Initialize baseline
+	// 4️⃣ Initialize external modules
+	InitTelegram(cfg)             
+	InitIntelligence(cfg.ChangeThreshold)
+
+	// 5️⃣ Initialize baseline
 	baselineFile := "baseline.json"
 	if _, err := os.Stat(baselineFile); os.IsNotExist(err) {
 		CreateBaseline(cfg.MonitorDir, baselineFile)
 		SaveSignature(baselineFile)
 	}
 
-	// 5️⃣ Verify baseline integrity on startup
+	// 6️⃣ Verify baseline integrity on startup
 	ok, err := VerifySignature(baselineFile)
 	if err != nil {
 		log.Printf("[⚠️] Baseline signature missing: %v", err)
 	} else if !ok {
 		log.Printf("[🚨] Baseline integrity verification FAILED — possible tampering detected!")
+		SendTelegramAlert("🚨 *TraceLock Critical Alert*\n\nBaseline file has been tampered with!")
 	} else {
 		log.Println("[✅] Baseline verified successfully.")
 	}
 
-	// 6️⃣ Load baseline
+	// 7️⃣ Load baseline
 	baseline := LoadBaseline(baselineFile)
 
-	// 7️⃣ Start monitoring in a goroutine
+	// 8️⃣ Start monitoring
 	go WatchDirectory(cfg, baseline, baselineFile)
 
-	// 8️⃣ Graceful shutdown
+	// 9️⃣ Graceful shutdown
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGTERM)
 	<-done

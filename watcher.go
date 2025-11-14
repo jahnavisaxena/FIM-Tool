@@ -33,11 +33,11 @@ func SaveForensicEvent(event ForensicEvent) {
 	data, _ := json.MarshalIndent(events, "", "  ")
 	os.WriteFile(reportFile, data, 0644)
 
-	// 🔐 Update integrity signature
+	// 🔐 Update integrity signature of forensic log
 	SaveSignature(reportFile)
 }
 
-// WatchDirectory monitors directory changes and updates logs/baseline
+// WatchDirectory monitors directory changes, updates baseline, logs events
 func WatchDirectory(cfg Config, baseline map[string]string, baselineFile string) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
@@ -57,10 +57,18 @@ func WatchDirectory(cfg Config, baseline map[string]string, baselineFile string)
 		case event := <-watcher.Events:
 			path := event.Name
 
+			// ===================================================================
+			//  🔵 FILE CREATED
+			// ===================================================================
 			if event.Op&fsnotify.Create == fsnotify.Create {
+
+				TrackEvent("create", path) // 🔥 anomaly tracking
+
 				hash := GetFileHash(path)
 				baseline[path] = hash
+
 				log.Printf("[ADDED] %s | Hash: %s\n", path, hash)
+
 				SaveBaseline(baseline, baselineFile)
 				SaveSignature(baselineFile)
 
@@ -72,11 +80,19 @@ func WatchDirectory(cfg Config, baseline map[string]string, baselineFile string)
 				})
 			}
 
+			// ===================================================================
+			//  🟠 FILE MODIFIED
+			// ===================================================================
 			if event.Op&fsnotify.Write == fsnotify.Write {
+
+				TrackEvent("modify", path) // 🔥 anomaly tracking
+
 				newHash := GetFileHash(path)
 				oldHash := baseline[path]
+
 				if oldHash != newHash {
 					log.Printf("[MODIFIED] %s\n  Old: %s\n  New: %s\n", path, oldHash, newHash)
+
 					baseline[path] = newHash
 					SaveBaseline(baseline, baselineFile)
 					SaveSignature(baselineFile)
@@ -91,10 +107,18 @@ func WatchDirectory(cfg Config, baseline map[string]string, baselineFile string)
 				}
 			}
 
+			// ===================================================================
+			//  🔴 FILE DELETED
+			// ===================================================================
 			if event.Op&fsnotify.Remove == fsnotify.Remove {
+
+				TrackEvent("delete", path) // 🔥 anomaly tracking
+
 				log.Printf("[DELETED] %s\n", path)
 				oldHash := baseline[path]
+
 				delete(baseline, path)
+
 				SaveBaseline(baseline, baselineFile)
 				SaveSignature(baselineFile)
 
